@@ -3,7 +3,7 @@
 \docType{data}
 \name{telework_data}
 \alias{telework_data}
-\title{Telework data}
+\title{Telework Data}
 \format{
 Data frame with numeric columns
 \describe{

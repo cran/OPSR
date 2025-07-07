@@ -72,6 +72,10 @@ Theta* make_theta_array(List theta) {
   return theta_array;
 }
 
+void free_theta_array(Theta* theta_array) {
+  delete[] theta_array;
+}
+
 // [[Rcpp::export]]
 bool opsr_check_omp() {
 #ifdef _OPENMP

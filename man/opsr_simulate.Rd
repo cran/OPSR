@@ -20,7 +20,7 @@ process).}
 \item{sigma}{assumed covariance matrix (to generate \code{errors}).}
 }
 \description{
-Simulates data from an ordinal probit process and separate (for each regime)
+Simulates data from an ordered probit process and separate (for each regime)
 OLS process where the errors follow a multivariate normal distribution.
 }
 \details{

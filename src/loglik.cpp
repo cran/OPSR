@@ -76,6 +76,9 @@ arma::colvec loglik_cpp(NumericVector& theta, arma::field<arma::mat>& W,
     ll = arma::join_cols(ll, ll_j[j]);
   }
 
+  // deallocate!
+  free_theta_array(theta_array);
+
   // element-wise multiplication
   return ll % weights;
 }

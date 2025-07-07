@@ -1,7 +1,8 @@
 ## documented below
 extract.opsr <- function(model, beside = FALSE, include.structural = TRUE,
                          include.selection = TRUE, include.outcome = TRUE,
-                         include.pseudoR2 = FALSE, include.R2 = FALSE, ...) {
+                         include.pseudoR2 = FALSE, include.R2 = FALSE,
+                         repeat.gofs = FALSE, ...) {
   ## unpack some stuff
   s <- summary(model, ...)
   str.names <- names(coef(model, component = "structural"))
@@ -41,10 +42,15 @@ extract.opsr <- function(model, beside = FALSE, include.structural = TRUE,
   }
 
   if (include.R2) {
-    R2 <- s$GOFcomponents$R2[["Total"]]
-    gof <- c(gof, R2)
-    gof.names <- c(gof.names, "R$^2$")
-    gof.decimal <- c(gof.decimal, TRUE)
+    R2 <- s$GOFcomponents$R2
+    for (r2 in R2) {
+      gof <- c(gof, r2)
+    }
+    gof.names <- c(gof.names, "R$^2$ (total)")
+    for (i in seq_len(s$nReg)) {
+      gof.names <- c(gof.names, paste0("R$^2$ (", i, ")"))
+    }
+    gof.decimal <- c(gof.decimal, rep(TRUE, length(R2)))
   }
 
   n <- stats::nobs(model)
@@ -97,6 +103,14 @@ extract.opsr <- function(model, beside = FALSE, include.structural = TRUE,
         trList[[length(trList) + 1]] <- tr
       }
     }
+    if (!repeat.gofs) {
+      tmp <- trList[[1]]@gof
+      trList <- lapply(trList, function(x) {
+        x@gof <- NA_real_
+        x
+      })
+      trList[[1]]@gof <- tmp
+    }
     return(trList)
 
   } else {  # beside == FALSE
@@ -138,8 +152,9 @@ extract.opsr <- function(model, beside = FALSE, include.structural = TRUE,
 #' @param include.outcome whether or not outcome coefficients should be printed.
 #' @param include.pseudoR2 whether or not the pseudo R2 statistic for the selection
 #'   component should be printed. See also the 'Details' section.
-#' @param include.R2 whether or not the R2 statistic for the outcome component
+#' @param include.R2 whether or not the R2 statistic for the outcome components
 #'   should be printed.
+#' @param repeat.gofs if `beside = TRUE` whether or not to repeat the gofs.
 #' @param ... additional arguments passed to [`summary.opsr`].
 #'
 #' @return A `texreg-class` object representing the statistical model.

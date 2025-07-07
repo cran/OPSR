@@ -2,7 +2,7 @@
 % Please edit documentation in R/opsr_fit.R
 \name{opsr.fit}
 \alias{opsr.fit}
-\title{Fitter Function for Ordinal Probit Switching Regression Models}
+\title{Fitter Function for Ordered Probit Switching Regression Models}
 \usage{
 opsr.fit(
   Ws,
@@ -16,6 +16,7 @@ opsr.fit(
   printLevel,
   nThreads,
   .useR = FALSE,
+  .loglik = FALSE,
   ...
 )
 }
@@ -45,6 +46,9 @@ outcome).}
 number of ordinal outcomes. See also \code{\link{opsr_check_omp}} and \code{\link{opsr_max_threads}}.}
 
 \item{.useR}{if \code{TRUE}, usese \code{\link{loglik_R}}. Go grab a coffe.}
+
+\item{.loglik}{if \code{TRUE}, returns the vector of log-likelihood values given
+the parameters passed via \code{start}.}
 
 \item{...}{further arguments passed to \code{\link[maxLik:maxLik]{maxLik::maxLik}}.}
 }

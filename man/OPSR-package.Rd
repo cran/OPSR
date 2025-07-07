@@ -4,9 +4,9 @@
 \name{OPSR-package}
 \alias{OPSR}
 \alias{OPSR-package}
-\title{OPSR: Ordinal Probit Switching Regression}
+\title{OPSR: Ordered Probit Switching Regression}
 \description{
-Estimates ordinal probit switching regression models - a Heckman type selection model with an ordinal selection and continuous outcomes. Different model specifications are allowed for each treatment/regime. For more details on the method, see Wang & Mokhtarian (2024) \doi{10.1016/j.tra.2024.104072} or Chiburis & Lokshin (2007) \doi{10.1177/1536867X0700700202}.
+Estimates ordered probit switching regression models - a Heckman type selection model with an ordinal selection and continuous outcomes. Different model specifications are allowed for each treatment/regime. For more details on the method, see Wang & Mokhtarian (2024) \doi{10.1016/j.tra.2024.104072} or Chiburis & Lokshin (2007) \doi{10.1177/1536867X0700700202}.
 }
 \seealso{
 Useful links:

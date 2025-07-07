@@ -17,6 +17,8 @@ Theta make_theta(arma::colvec gamma, double kappa_j_1, double kappa_j,
 
 Theta* make_theta_array(Rcpp::List theta);
 
+void free_theta_array(Theta* theta_array);
+
 Rcpp::List opsr_prepare_coefs(Rcpp::NumericVector& theta, int nReg);
 bool opsr_check_omp();
 int opsr_max_threads();

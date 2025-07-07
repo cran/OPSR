@@ -33,6 +33,15 @@ test_that("can predict on a single new data point", {
   expect_no_error(p <- predict(fit, group = group, newdata = newdat))
 })
 
+test_that("can predict on new data points", {
+  sim_dat <- load_sim_dat()
+  dat <- sim_dat$data
+  fit <- opsr(ys | yo ~ xs1 + xs2 | xo1 + xo2, dat, printLevel = 0)
+  newdat <- dat[1:4, ]
+  expect_error(predict(fit, group = 3, newdata = newdat))
+  expect_no_error(predict(fit, group = 2, newdata = newdat))
+})
+
 test_that("produces numeric vector of length n for all type args", {
   sim_dat <- load_sim_dat()
   dat <- sim_dat$data
@@ -102,3 +111,10 @@ test_that("yields similar results to predict.lm if no error correlation", {
   expect_equal(test, 1, tolerance = 1e-2)
 })
 
+test_that("works on model with formula transformation (factor)", {
+  sim_dat <- load_sim_dat()
+  dat <- sim_dat$data
+  dat$xs3 <- ifelse(dat$xs2 > 0, "a", "b")
+  fit <- opsr(ys | yo ~ xs1 + factor(xs3) | xo1 + xo2, data = dat, printLevel = 0)
+  expect_no_error(predict(fit, group = 1, type = "prob"))
+})

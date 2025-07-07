@@ -20,6 +20,9 @@
 anova.opsr <- function(object, ...) {
   ## general architecture inspired by anova.glm and anova.glmlist
   dotargs <- list(...)
+  if (is_opsr_null(object) && length(dotargs) == 0) {
+    stop("you are comparing the null model to itself")
+  }
   named <- if (is.null(names(dotargs)))
     rep_len(FALSE, length(dotargs))
   else (names(dotargs) != "")
@@ -100,6 +103,7 @@ stat.anova.opsr <- function(table, test = "LRT", ...) {  # could be extended wit
 #' @param signif.stars if `TRUE`, P-values are additionally encoded visually
 #'   as 'significance stars' in order to help scanning of long coefficient tables.
 #'   It defaults to the `show.signif.stars` slot of [`options`].
+#' @param print.formula if `TRUE`, the formulas of the models are printed.
 #' @param ... further arguments passed to [`stats::printCoefmat`].
 #'
 #' @return Prints tables in a 'pretty' form and returns `x` invisibly.
@@ -109,11 +113,13 @@ stat.anova.opsr <- function(table, test = "LRT", ...) {  # could be extended wit
 #' @seealso [`stats::printCoefmat`], [`anova.opsr`]
 #' @export
 print.anova.opsr <- function(x, digits = max(getOption("digits") - 2L, 3L), signif.stars = getOption("show.signif.stars"),
-                              ...) {
+                             print.formula = TRUE, ...) {
   parse_formula <- function(f) paste(deparse(f), collapse = "\n")
   cat("Likelihood Ratio Test\n\n")
-  for (i in seq_along(x$formulas)) {
-    cat("Model ", i, ": ", parse_formula(x$formulas[[i]]), "\n", sep = "")
+  if (print.formula) {
+    for (i in seq_along(x$formulas)) {
+      cat("Model ", i, ": ", parse_formula(x$formulas[[i]]), "\n", sep = "")
+    }
   }
   stats::printCoefmat(x$table, digits = digits, signif.stars = signif.stars, na.print = "", ...)
   invisible(x)

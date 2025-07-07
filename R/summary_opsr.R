@@ -15,7 +15,7 @@
 #'   the default starting values were used). `LLfinal` is the log-likelihood at
 #'   final convergence and `AIC`, `BIC` the corresponding information critereon.}
 #' \item{GOFcomponents}{Contains the \emph{goodness of fit}  for the model components.
-#'   `LLprobit` is the log-likelihood (LL) contribution of the ordinal probit model.
+#'   `LLprobit` is the log-likelihood (LL) contribution of the ordered probit model.
 #'   `LLprobitEl` the LL of the "equally likely" and `LLprobitMs` the LL of the
 #'   "market share" model. With these three metrics the pseudo R2 is computed and
 #'   returned as `pseudoR2el` and `pseudoR2ms`. `R2` reports the usual coefficient
@@ -71,6 +71,10 @@ summary.opsr <- function(object, rob = TRUE, ...) {
   ## constants only model
   pattern <- "^kappa|^sigma|^rho|(Intercept)"
   h_null <- nm[!grepl(pattern, nm)]
+  if (any(model$fixed) && !is_opsr_null(model)) {  # issue 10
+    fixed <- names(model$fixed)[model$fixed]
+    h_null <- h_null[!(h_null %in% fixed)]
+  }
   wald_test_null <- wald_test(model, h_null, varcov)
 
   coef_inf <- function(model, varcov) {

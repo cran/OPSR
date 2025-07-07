@@ -21,8 +21,14 @@ opsr_null_model <- function(object, ...) {
     stop("Intercept needs to be included for all regimes!")
   }
   fixed <- sapply(nm, function(x) !grepl(pattern, x))
-  dat <- model.frame(object)
-  fit_null <- opsr(object$formula, dat, start = start, fixed = fixed, ...)
+  dat <- opsr_get_all_vars(object)
+
+  ## somewhat hacky: model.frame searches environment(object$formula) but we want
+  ## it to find the data in this environment
+  f <- object$formula
+  environment(f) <- environment()
+
+  fit_null <- opsr(f, dat, start = start, fixed = fixed, ...)
   class(fit_null) <- c("opsr.null", class(object))
   fit_null
 }
@@ -30,6 +36,7 @@ opsr_null_model <- function(object, ...) {
 #' @export
 summary.opsr.null <- function(object, ...) {
   ms <- NextMethod("summary", object)  # opsr
+  ms$coef_table[object$fixed, "Estimate"] <- NA_real_
   ms$formula <- ~Nullmodel
   class(ms) <- c("summary.opsr.null", class(ms))
   ms
@@ -37,8 +44,6 @@ summary.opsr.null <- function(object, ...) {
 
 #' @export
 print.summary.opsr.null <- function(x, ...) {
-  ps <- utils::capture.output(NextMethod("print", x))
-  ps[2] <- "Ordinal probit switching regression (null model)"
-  cat(ps, sep = "\n")
+  NextMethod("print", x)
   invisible(x)
 }

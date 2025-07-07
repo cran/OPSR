@@ -8,6 +8,7 @@
   x,
   digits = max(getOption("digits") - 2L, 3L),
   signif.stars = getOption("show.signif.stars"),
+  print.formula = TRUE,
   ...
 )
 }
@@ -19,6 +20,8 @@
 \item{signif.stars}{if \code{TRUE}, P-values are additionally encoded visually
 as 'significance stars' in order to help scanning of long coefficient tables.
 It defaults to the \code{show.signif.stars} slot of \code{\link{options}}.}
+
+\item{print.formula}{if \code{TRUE}, the formulas of the models are printed.}
 
 \item{...}{further arguments passed to \code{\link[stats:printCoefmat]{stats::printCoefmat}}.}
 }

@@ -24,7 +24,7 @@ expected parameter names to the numeric vector. Therefore the user has to
 conform to the expected order. See 'Details' for further explanation.
 }
 \details{
-Expected order: 1. kappa threshold parameters (for ordinal probit model),
+Expected order: 1. kappa threshold parameters (for ordered probit model),
 2. parameters of the selection process (names starting with \code{s_}), 3. parameters
 of the outcome processes (names starting with \verb{o[0-9]_}), 4. sigma, 5. rho.
 If the same outcome process specification is used in the \code{formula}, the starting

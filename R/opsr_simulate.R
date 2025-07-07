@@ -41,7 +41,7 @@ errors <- function(Sigma, nobs = 1000) {
 
 #' Simulate Data from an OPSR Process
 #'
-#' Simulates data from an ordinal probit process and separate (for each regime)
+#' Simulates data from an ordered probit process and separate (for each regime)
 #' OLS process where the errors follow a multivariate normal distribution.
 #'
 #' @param nobs number of observations to simulate.

@@ -20,7 +20,8 @@ model.matrix.opsr <- function(object, data, .filter = NULL, ...) {
   z <- Formula::model.part(f, data = mf, lhs = 1, drop = TRUE)
   y <- Formula::model.part(f, data = mf, lhs = 2, drop = TRUE)
 
-  w <- model.matrix(update(f, ~ . -1), mf, rhs = 1)  # no intercept (identification threshold)!
+  w <- model.matrix(f, mf, rhs = 1)
+  w <- w[, !(colnames(w) %in% "(Intercept)"), drop = FALSE]  # no intercept (identification threshold)!
   W <- lapply(seq_len(nReg), function(i) {
     j <- .filter %||% i
     z_not_present <- all(z != j)

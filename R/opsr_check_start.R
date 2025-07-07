@@ -13,7 +13,7 @@
 #' @return Named numeric vector conforming to the expected structure.
 #'
 #' @details
-#' Expected order: 1. kappa threshold parameters (for ordinal probit model),
+#' Expected order: 1. kappa threshold parameters (for ordered probit model),
 #' 2. parameters of the selection process (names starting with `s_`), 3. parameters
 #' of the outcome processes (names starting with `o[0-9]_`), 4. sigma, 5. rho.
 #' If the same outcome process specification is used in the `formula`, the starting

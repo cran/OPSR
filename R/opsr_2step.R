@@ -26,17 +26,44 @@
 opsr_2step <- function(W, Xs, Z, Ys) {
   nReg <- length(Xs)
 
+  fit_sel <- function() {
+    fit_selection <- suppressWarnings(
+      MASS::polr(factor(Z) ~ W, method = "probit")
+    )
+
+    kappa <- unname(fit_selection$zeta)
+    names(kappa) <- paste0("kappa", 1:length(kappa))
+    kappa_ <- c(-Inf, kappa, Inf)  # add boundaries for step 2
+
+    gamma <- unname(fit_selection$coefficients)
+    names(gamma) <- paste0("s_", colnames(W))
+    list(kappa = kappa, kappa_ = kappa_, gamma = gamma)
+  }
+
+  ## MASS::polr() errors if Z has only 2 levels
+  fit_sel2 <- function() {
+    fit_selection <- suppressWarnings(
+      stats::glm(factor(Z) ~ W, family = stats::binomial(link = "probit"))
+    )
+
+    kappa <- unname(fit_selection$coefficients[1])
+    names(kappa) <- "kappa1"
+    kappa_ <- c(-Inf, kappa, Inf)
+    gamma <- unname(fit_selection$coefficients[-1])
+    names(gamma) <- paste0("s_", colnames(W))
+    list(kappa = kappa, kappa_ = kappa_, gamma = gamma)
+  }
+
   ## step 1
-  fit_selection <- suppressWarnings(
-    MASS::polr(factor(Z) ~ W, method = "probit")
-  )
+  if (nReg == 2) {
+    step1 <- fit_sel2()
+  } else {
+    step1 <- fit_sel()
+  }
+  kappa <- step1$kappa
+  kappa_ <- step1$kappa_
+  gamma <- step1$gamma
 
-  kappa <- unname(fit_selection$zeta)
-  names(kappa) <- paste0("kappa", 1:length(kappa))
-  kappa_ <- c(-Inf, kappa, Inf)  # add boundaries for step 2
-
-  gamma <- unname(fit_selection$coefficients)
-  names(gamma) <- paste0("s_", colnames(W))
 
   ## step 2
   step2 <- function(x, imr, y) {
