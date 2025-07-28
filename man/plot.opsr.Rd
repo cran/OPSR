@@ -4,7 +4,12 @@
 \alias{plot.opsr}
 \title{Plot Method for OPSR Model Fits}
 \usage{
-\method{plot}{opsr}(x, type, weights = NULL, ...)
+\method{plot}{opsr}(
+  x,
+  type = c("response", "unlog-response", "prob", "mills", "correction", "Xb"),
+  weights = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class \code{"opsr"}.}

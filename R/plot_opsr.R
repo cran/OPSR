@@ -11,7 +11,9 @@
 #'
 #' @method plot opsr
 #' @export
-plot.opsr <- function(x, type, weights = NULL, ...) {
+plot.opsr <- function(x, type = c("response", "unlog-response", "prob", "mills", "correction", "Xb"),
+                      weights = NULL, ...) {
+  type <- match.arg(type)
   te <- opsr_te(x, type = type, weights = weights)
   graphics::pairs(te, ...)
   invisible(x)

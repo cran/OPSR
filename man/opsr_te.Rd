@@ -4,7 +4,12 @@
 \alias{opsr_te}
 \title{Treatment Effect Computations for OPSR Model Fits}
 \usage{
-opsr_te(object, type, weights = NULL, ...)
+opsr_te(
+  object,
+  type = c("response", "unlog-response", "prob", "mills", "correction", "Xb"),
+  weights = NULL,
+  ...
+)
 }
 \arguments{
 \item{object}{object an object of class \code{"opsr"}.}

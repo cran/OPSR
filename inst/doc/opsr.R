@@ -21,7 +21,7 @@ options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE,
 ###################################################
 ### code chunk number 2: sim-dat
 ###################################################
-sim_dat <- opsr_simulate()
+sim_dat <- opsr_simulate(seed = 0)
 dat <- sim_dat$data
 head(dat)
 

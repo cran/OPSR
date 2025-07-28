@@ -14,7 +14,9 @@
 #' @seealso [`summary.opsr.te`]
 #' @example R/examples/ex-opsr_te.R
 #' @export
-opsr_te <- function(object, type, weights = NULL, ...) {
+opsr_te <- function(object, type = c("response", "unlog-response", "prob", "mills", "correction", "Xb"),
+                    weights = NULL, ...) {
+  type <- match.arg(type)
   if (is.null(weights)) {
     weights <- object$weights
   }

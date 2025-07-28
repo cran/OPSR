@@ -4,12 +4,15 @@
 \alias{opsr_simulate}
 \title{Simulate Data from an OPSR Process}
 \usage{
-opsr_simulate(nobs = 1000, sigma = NULL)
+opsr_simulate(nobs = 1000, sigma = NULL, seed = NULL)
 }
 \arguments{
 \item{nobs}{number of observations to simulate.}
 
 \item{sigma}{the covariance matrix of the multivariate normal.}
+
+\item{seed}{a single value, interpreted as an integer, or \code{NULL} passed to
+\code{\link{set.seed}}.}
 }
 \value{
 Named list:

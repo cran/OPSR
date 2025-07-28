@@ -46,6 +46,8 @@ errors <- function(Sigma, nobs = 1000) {
 #'
 #' @param nobs number of observations to simulate.
 #' @param sigma the covariance matrix of the multivariate normal.
+#' @param seed a single value, interpreted as an integer, or `NULL` passed to
+#'   [`set.seed`].
 #'
 #' @return Named list:
 #' \item{params}{ground truth parameters.}
@@ -61,7 +63,11 @@ errors <- function(Sigma, nobs = 1000) {
 #' process.
 #'
 #' @export
-opsr_simulate <- function(nobs = 1000, sigma = NULL) {
+opsr_simulate <- function(nobs = 1000, sigma = NULL, seed = NULL) {
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
+
   ## same regressors in selection and outcome might lead to identification issues
   X <- obs_mat(nobs, p = 2, sd = 1)
   colnames(X) <- paste0("xo", 1:ncol(X))

@@ -318,7 +318,7 @@ We first illustrate how to specify a model using \pkg{Formula}'s extended syntax
 Let us simulate date from an OPSR process with three ordinal outcomes and distinct design matrices $\boldsymbol{W}$ and $\boldsymbol{X}$ (where $\boldsymbol{X} = \boldsymbol{X_j} \ \forall{j}$) by
 %
 <<sim-dat>>=
-sim_dat <- opsr_simulate()
+sim_dat <- opsr_simulate(seed = 0)
 dat <- sim_dat$data
 head(dat)
 @

@@ -1,3 +1,10 @@
+# OPSR (development version)
+
+# OPSR 1.0.1
+
+* `opsr_simulate()` now takes `seed` argument to enable reproducibility.
+* `plot.opsr()` and `opsr_te()` define `type` arg list to behave similarly to `predict.opsr()`.
+
 # OPSR 1.0.0
 
 * `print.summary.opsr()` now shows GOF indicators.
